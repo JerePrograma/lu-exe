@@ -1,20 +1,21 @@
 :root {
-  --bg: #f7f3ff;
-  --card: #ffffff;
-  --primary: #7c3aed;
-  --primary-light: #ede9fe;
-  --primary-dark: #5b21b6;
-  --accent: #ec4899;
-  --accent-light: #fce7f3;
-  --green: #10b981;
-  --green-light: #d1fae5;
-  --text: #1e1b4b;
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
-  --shadow: 0 4px 24px rgba(124,58,237,0.12);
-  --shadow-lg: 0 8px 40px rgba(124,58,237,0.18);
-  --radius: 20px;
-  --radius-sm: 12px;
+  --bg: #070b1d;
+  --bg-deep: #111032;
+  --card: rgba(16, 22, 50, 0.82);
+  --card-strong: rgba(22, 30, 67, 0.94);
+  --sapphire: #2f6fed;
+  --sapphire-soft: #79a8ff;
+  --bordeaux: #8f254d;
+  --bordeaux-soft: #d9688f;
+  --violet: #a78bfa;
+  --pink: #f5b8cf;
+  --text: #f7f3ff;
+  --text-muted: #c8c4df;
+  --border: rgba(255, 255, 255, 0.16);
+  --border-strong: rgba(121, 168, 255, 0.58);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+  --radius: 28px;
+  --radius-sm: 16px;
 }
 
 * {
@@ -29,108 +30,530 @@ body {
 }
 
 body {
-  background: var(--bg);
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(124,58,237,0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(236,72,153,0.06) 0%, transparent 50%);
-  font-family: 'Nunito', sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(47, 111, 237, 0.32), transparent 34%),
+    radial-gradient(circle at 88% 22%, rgba(143, 37, 77, 0.26), transparent 30%),
+    radial-gradient(circle at 50% 92%, rgba(167, 139, 250, 0.2), transparent 36%),
+    linear-gradient(145deg, var(--bg), var(--bg-deep) 62%, #150a23);
   color: var(--text);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-button {
+body::before {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+  content: "";
+  inset: 0;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent);
+  pointer-events: none;
+  position: fixed;
+}
+
+button,
+input {
   font: inherit;
 }
 
+button {
+  min-height: 48px;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--pink);
+  outline-offset: 3px;
+}
+
 img {
-  max-width: 100%;
   display: block;
+  max-width: 100%;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+.app-shell {
+  align-items: center;
+  display: flex;
+  isolation: isolate;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 20px;
+  position: relative;
 }
 
-@keyframes fadeDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.08);
-  }
-}
-
-@keyframes pop {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.float-cat {
-  position: fixed;
-  height: 100px;
-  width: auto;
+.ambient {
+  border-radius: 999px;
+  filter: blur(14px);
+  opacity: 0.62;
   pointer-events: none;
-  animation: rain linear forwards;
-  z-index: 9999;
-  top: -120px;
+  position: fixed;
+  z-index: -1;
 }
 
-@keyframes rain {
+.ambient-one {
+  background: rgba(47, 111, 237, 0.28);
+  height: 210px;
+  left: -80px;
+  top: 8%;
+  width: 210px;
+}
+
+.ambient-two {
+  background: rgba(217, 104, 143, 0.24);
+  bottom: 4%;
+  height: 260px;
+  right: -120px;
+  width: 260px;
+}
+
+.invite-card {
+  backdrop-filter: blur(26px);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03)),
+    var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  max-width: 620px;
+  overflow: hidden;
+  padding: 18px;
+  position: relative;
+  width: min(100%, 620px);
+}
+
+.invite-card::before,
+.invite-card::after {
+  color: rgba(245, 184, 207, 0.36);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  pointer-events: none;
+  position: absolute;
+}
+
+.invite-card::before {
+  content: "<Lu />";
+  left: 20px;
+  top: 86px;
+}
+
+.invite-card::after {
+  bottom: 18px;
+  content: "while (sinPresion) { charla++; }";
+  right: 18px;
+}
+
+.app-header {
+  align-items: center;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr auto;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.terminal-pill,
+.eyebrow,
+.step-tag,
+.progress-area,
+.soft-icon,
+.technical-note {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.terminal-pill {
+  background: rgba(8, 12, 31, 0.78);
+  border: 1px solid rgba(121, 168, 255, 0.25);
+  border-radius: 999px;
+  color: var(--sapphire-soft);
+  font-size: 0.74rem;
+  overflow: hidden;
+  padding: 10px 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cat-mark {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  box-shadow: 0 0 24px rgba(121, 168, 255, 0.18);
+  height: 52px;
+  object-fit: cover;
+  width: 52px;
+}
+
+.eyebrow {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  grid-column: 1 / -1;
+}
+
+.progress-area {
+  color: var(--text-muted);
+  display: grid;
+  font-size: 0.72rem;
+  gap: 8px;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.progress-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  height: 7px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, var(--sapphire), var(--violet), var(--bordeaux-soft));
+  border-radius: inherit;
+  height: 100%;
+  transition: width 260ms ease;
+}
+
+.screen {
+  animation: rise 280ms ease both;
+  background: var(--card-strong);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.center-screen {
+  text-align: center;
+}
+
+.intro-screen {
+  min-height: 430px;
+}
+
+.code-window {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 26px;
+}
+
+.code-window span {
+  background: var(--pink);
+  border-radius: 999px;
+  box-shadow: 22px 0 0 var(--violet), 44px 0 0 var(--sapphire-soft);
+  height: 10px;
+  width: 10px;
+}
+
+.step-tag,
+.soft-icon {
+  color: var(--sapphire-soft);
+  display: inline-block;
+  font-size: 0.78rem;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: clamp(2rem, 8vw, 4rem);
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+}
+
+.screen h1 {
+  margin-bottom: 14px;
+}
+
+.intro-screen h2 {
+  color: var(--pink);
+  font-size: clamp(1rem, 4.6vw, 1.45rem);
+  line-height: 1.25;
+  margin-bottom: 18px;
+  max-width: 470px;
+}
+
+.screen p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.muted-copy {
+  margin-bottom: 18px;
+}
+
+.final-copy {
+  margin-top: 18px;
+}
+
+.primary-button,
+.ghost-button,
+.choice-button {
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 800;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, var(--sapphire), #6e58f5);
+  box-shadow: 0 14px 34px rgba(47, 111, 237, 0.32);
+  color: white;
+  padding: 14px 20px;
+}
+
+.primary-button:hover,
+.ghost-button:hover,
+.choice-button:hover {
+  transform: translateY(-1px);
+}
+
+.wide-button {
+  margin-top: 24px;
+  width: 100%;
+}
+
+.ghost-button {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 20px;
+}
+
+.choice-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.three-options {
+  grid-template-columns: 1fr;
+}
+
+.choice-button {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--border);
+  color: var(--text);
+  line-height: 1.35;
+  padding: 15px 16px;
+  text-align: left;
+}
+
+.choice-button.selected,
+.choice-button[aria-pressed="true"] {
+  background: rgba(47, 111, 237, 0.2);
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 4px rgba(47, 111, 237, 0.14);
+  color: white;
+}
+
+.calm-choice {
+  color: var(--text-muted);
+}
+
+.field-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.field-label {
+  color: var(--text-muted);
+  display: grid;
+  font-size: 0.88rem;
+  font-weight: 800;
+  gap: 8px;
+}
+
+.field-label input {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  min-height: 52px;
+  padding: 12px 14px;
+}
+
+.error-message {
+  background: rgba(143, 37, 77, 0.18);
+  border: 1px solid rgba(217, 104, 143, 0.48);
+  border-radius: 14px;
+  color: #ffdce8 !important;
+  font-size: 0.9rem !important;
+  margin-top: 14px;
+  padding: 10px 12px;
+}
+
+.technical-note {
+  background: rgba(245, 184, 207, 0.1);
+  border: 1px solid rgba(245, 184, 207, 0.22);
+  border-radius: 16px;
+  color: #f2d7e3 !important;
+  font-size: 0.82rem !important;
+  line-height: 1.5 !important;
+  margin-top: 16px;
+  padding: 12px;
+}
+
+.summary-list {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  display: grid;
+  margin-top: 18px;
+  overflow: hidden;
+}
+
+.summary-row {
+  display: grid;
+  gap: 4px;
+  padding: 13px 14px;
+}
+
+.summary-row + .summary-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.summary-row dt {
+  color: var(--sapphire-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.75rem;
+}
+
+.summary-row dd {
+  color: var(--text);
+  font-weight: 800;
+}
+
+.button-row {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.success-screen {
+  border-color: rgba(121, 168, 255, 0.48);
+}
+
+.pdf-stage {
+  left: -9999px;
+  position: absolute;
+  top: 0;
+}
+
+.pdf-card {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(47, 111, 237, 0.18), transparent 30%),
+    linear-gradient(145deg, #fff8fb, #edf3ff);
+  border: 2px solid #c8d7ff;
+  border-radius: 24px;
+  color: #141834;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding: 34px;
+  width: 560px;
+}
+
+.pdf-card .pdf-kicker {
+  color: #2f6fed;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.pdf-card h1 {
+  color: #141834;
+  font-size: 30px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 22px;
+}
+
+.pdf-card p {
+  color: #4a4f6a;
+  font-size: 15px;
+  line-height: 1.55;
+  margin-top: 22px;
+}
+
+.pdf-card .summary-list {
+  background: white;
+  border-color: #d7def5;
+}
+
+.pdf-card .summary-row + .summary-row {
+  border-top-color: #e6eaf7;
+}
+
+.pdf-card .summary-row dt {
+  color: #2f6fed;
+}
+
+.pdf-card .summary-row dd {
+  color: #141834;
+}
+
+.pdf-card .compact .summary-row {
+  padding: 11px 12px;
+}
+
+@keyframes rise {
   from {
-    top: -50px;
-    opacity: 1;
-  }
-  to {
-    top: 110vh;
     opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (max-width: 480px) {
-  :root {
-    --radius: 16px;
-    --radius-sm: 10px;
+@media (min-width: 560px) {
+  .three-options {
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  body {
-    background-image:
-      radial-gradient(circle at 20% 10%, rgba(124,58,237,0.06) 0%, transparent 40%),
-      radial-gradient(circle at 80% 90%, rgba(236,72,153,0.04) 0%, transparent 40%);
+  .button-row,
+  .field-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .float-cat {
-    height: 70px;
+  .choice-button {
+    text-align: center;
+  }
+}
+
+@media (max-width: 460px) {
+  .app-shell {
+    align-items: stretch;
+    padding: 12px;
+  }
+
+  .invite-card {
+    border-radius: 22px;
+    padding: 14px;
+  }
+
+  .invite-card::before,
+  .invite-card::after {
+    display: none;
+  }
+
+  .screen {
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  .intro-screen {
+    min-height: 390px;
+  }
+
+  .terminal-pill {
+    font-size: 0.68rem;
   }
 }
